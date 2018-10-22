@@ -4,6 +4,11 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/base-server/pom.xml" />
+        <option value="$PROJECT_DIR$/base-server/eureka-server/pom.xml" />
+        <option value="$PROJECT_DIR$/base-server/feign-server/pom.xml" />
+        <option value="$PROJECT_DIR$/base-server/zuul-server/pom.xml" />
+        <option value="$PROJECT_DIR$/admin-server/pom.xml" />
       </list>
     </option>
   </component>
