@@ -1,6 +1,7 @@
 package com.hawk.admin.adminserver.api;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminApi {
 
     @RequestMapping("login.do")
-    public String login(){
+    public String login(@RequestParam(value = "username") String username,
+                        @RequestParam(value = "password") String password){
 
-        return "登陆成功！";
+        return username+"  "+password+ "  登陆成功！";
     }
 }
