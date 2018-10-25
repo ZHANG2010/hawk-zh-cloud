@@ -7,18 +7,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 /**
- * AccessTokenFilter
- * accessToken 过滤器
+ * MyFilter
+ *
  * @author hawk_zhang
- * @date 2018/10/22
+ * @date 2018/10/25
  */
 @Component
-public class AccessTokenFilter extends ZuulFilter {
+public class MyFilter extends ZuulFilter {
 
-    private static Logger log = LoggerFactory.getLogger(AccessTokenFilter.class);
+    private static Logger log = LoggerFactory.getLogger(MyFilter.class);
 
     /**
      * 过滤的类型
@@ -29,12 +28,12 @@ public class AccessTokenFilter extends ZuulFilter {
      */
     @Override
     public String filterType() {
-        return "post";
+        return "pre";
     }
 
     /**
      * 过滤的顺序
-     * 数字越低，优先级越高
+     * 数字越小，优先级越高
      */
     @Override
     public int filterOrder() {
@@ -44,11 +43,11 @@ public class AccessTokenFilter extends ZuulFilter {
     /**
      * 可以写逻辑判断，是否过滤
      * true：永远过滤
-     * false: 不过滤
+     * false:不过滤
      */
     @Override
     public boolean shouldFilter() {
-        return false;
+        return true;
     }
 
     /**
@@ -59,20 +58,20 @@ public class AccessTokenFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-
-        log.info(String.format("%s AccessTokenFilter request to %s",request.getMethod(),request.getRequestURL().toString()));
-        Object accessToken = request.getParameter("token");
-        if (accessToken == null){
-            log.warn("token is empty!");
+        log.info(String.format("%s MyFilter request to %s",request.getMethod(),request.getRequestURL().toString()));
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if(username!= null && password != null){
+            ctx.setSendZuulResponse(true);
+            ctx.setResponseStatusCode(200);
+            ctx.set("isSuccess",true);
+            return null;
+        }else {
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(401);
-            try {
-                ctx.getResponse().getWriter().write("token is empty!");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ctx.set("isSuccess",false);
+            ctx.setResponseBody("{\"result\":\"用户名密码错误！\"}");
         }
-        log.info("OK !!!");
         return null;
     }
 }

@@ -1,8 +1,12 @@
 package com.hawk.admin.adminserver.api;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import javafx.application.Application;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * AdminServerApplication
@@ -14,10 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("admin")
 public class AdminApi {
 
-    @RequestMapping("login.do")
-    public String login(@RequestParam(value = "username") String username,
-                        @RequestParam(value = "password") String password){
+    @PostMapping("login.do")
+    public void login(  @RequestParam("username") String username,
+                        @RequestParam("password") String password,
+                        @RequestParam("timestrap") String timestrap,
+                        HttpServletResponse response,
+                        HttpSession session){
 
-        return username+"  "+password+ "  登陆成功！";
+        System.out.println("username:" + username + "  password:" + password + "  timestrap:"+timestrap);
+
+        session.setAttribute("username",username);
+        try {
+            response.sendRedirect("index.html");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.hawk.base.zuul.zuulserver;
 
 import com.hawk.base.zuul.zuulserver.filter.AccessTokenFilter;
+import com.hawk.base.zuul.zuulserver.filter.MyFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -27,5 +28,9 @@ public class ZuulServerApplication {
 	@Bean
 	public AccessTokenFilter accessTokenFilter(){
 		return new AccessTokenFilter();
+	}
+	@Bean
+	public MyFilter myFilter(){
+		return  new MyFilter();
 	}
 }
