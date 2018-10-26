@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>主页面</title>
-
+    <script src="../admin/assets/js/jquery-1.8.2.min.js"></script>
+    <script src="../admin/js/jquery.cookie.js"></script>
 </head>
 <body>
-欢迎您，管理员！
+<div>欢迎您，管理员！</div>
+<div>
+    <button onclick="validate()">验证 login</button>
+</div>
 </body>
+<script>
+     var token = $.cookie("token");
+     function validate() {
+         $.ajax({
+             type:"post",
+             url:"/admin/validateLogin.do",
+             headers:{"authorization": token},
+             dataType:"JSON",
+             data:{"username":"zh","password":"123","timestrap": new Date().getTime()},
+             success:function (data) {
+                 alert(data.state);
+             }
+         })
+     }
+</script>
 </html>

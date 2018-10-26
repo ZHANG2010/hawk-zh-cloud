@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 /**
  * AccessTokenFilter
@@ -29,7 +28,7 @@ public class AccessTokenFilter extends ZuulFilter {
      */
     @Override
     public String filterType() {
-        return "post";
+        return "pre";
     }
 
     /**
@@ -48,7 +47,7 @@ public class AccessTokenFilter extends ZuulFilter {
      */
     @Override
     public boolean shouldFilter() {
-        return false;
+        return true;
     }
 
     /**
@@ -66,11 +65,7 @@ public class AccessTokenFilter extends ZuulFilter {
             log.warn("token is empty!");
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(401);
-            try {
-                ctx.getResponse().getWriter().write("token is empty!");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ctx.setResponseBody("{\"result\":\"username and password is wraining .\"}");
         }
         log.info("OK !!!");
         return null;

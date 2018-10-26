@@ -1,11 +1,9 @@
 package com.hawk.admin.adminserver.api;
 
-import javafx.application.Application;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -22,16 +20,27 @@ public class AdminApi {
     public void login(  @RequestParam("username") String username,
                         @RequestParam("password") String password,
                         @RequestParam("timestrap") String timestrap,
-                        HttpServletResponse response,
-                        HttpSession session){
+                        HttpServletResponse response ){
 
         System.out.println("username:" + username + "  password:" + password + "  timestrap:"+timestrap);
-
-        session.setAttribute("username",username);
+        String token = "123456";
+        Cookie cookie = new Cookie("token",token);
+        cookie.setMaxAge(24*3600);
+        response.addCookie(cookie);
         try {
             response.sendRedirect("index.html");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @PostMapping("validateLogin.do")
+    @ResponseBody
+    public String validateLogin(@RequestHeader("authorization") String authorization,
+                              @RequestParam("username") String username,
+                              @RequestParam("password") String password,
+                              @RequestParam("timestrap") String timestrap){
+        System.out.println("username:" + username + "  password:" + password + "  timestrap:" + timestrap + " Authorization:"+authorization);
+        return "{\"state\":\"success\"}";
     }
 }
