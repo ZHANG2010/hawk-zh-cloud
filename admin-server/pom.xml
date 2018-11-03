@@ -6,7 +6,7 @@
 	<groupId>com.hawk.admin</groupId>
 	<artifactId>admin-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<name>admin-server</name>
 	<description>用户服务模块</description>
@@ -15,7 +15,6 @@
 		<groupId>com.hawk</groupId>
 		<artifactId>hawk-zh-cloud</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<dependencies>
@@ -27,9 +26,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
-
 	</dependencies>
-
 
 </project>

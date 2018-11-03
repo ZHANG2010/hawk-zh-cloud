@@ -6,7 +6,7 @@
 	<groupId>com.hawk.base.zuul</groupId>
 	<artifactId>zuul-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<name>zuul-server</name>
 	<description>网关服务模块</description>
@@ -15,7 +15,6 @@
 		<groupId>com.hawk.base</groupId>
 		<artifactId>base-server</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<dependencies>

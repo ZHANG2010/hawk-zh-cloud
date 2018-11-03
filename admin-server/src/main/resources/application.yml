@@ -1,9 +1,20 @@
 server:
   port: 8081
-spring:
-  application:
-    name: admin-server
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: admin-server
+  datasource: #springboot会直接在容器中构建一个dataSource供我们使用。
+    url: jdbc:mysql://localhost:3306/spring_cloud_hawk?serverTimezone=UTC
+    username: hawk
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  type-aliases-package: com.hawk.admin.adminserver.entity
+  mapper-locations: com.hawk.admin.adminserver.mapper/*.xml
