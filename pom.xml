@@ -63,6 +63,12 @@
             <version>1.3.5</version>
         </dependency>
 
+        <!-- Redis缓存整合开始 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- Redis缓存整合结束 -->
     </dependencies>
 
     <dependencyManagement>

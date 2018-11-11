@@ -4,6 +4,8 @@ import com.hawk.admin.adminserver.common.TokenUtils;
 import com.hawk.admin.adminserver.entity.User;
 import com.hawk.admin.adminserver.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -22,39 +24,59 @@ import java.util.Map;
 public class AdminApi {
 
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @PostMapping("login.do")
-    public String login(  @RequestParam("username") String username,
+    public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         @RequestParam("timestrap") String timestrap,
-                        HttpServletResponse response ){
+                        HttpServletResponse response ) throws IOException {
 
         System.out.println("username:" + username + "  password:" + password + "  timestrap:"+timestrap);
 
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
-        Map<String,String> newUser = adminService.login(user);
-        if(newUser == null){
-            try {
-                response.sendRedirect("login.html");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+
+        if (redisTemplate.hasKey(username)){
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 测试 RedisTemplate ！>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         }
 
-        String token = "123456";
-        Cookie cookie = new Cookie("token",token);
-        cookie.setMaxAge(24*3600);
-        response.addCookie(cookie);
-        try {
-            response.sendRedirect("index.html");
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(stringRedisTemplate.hasKey(username)){
+            String pwRedis = stringRedisTemplate.opsForValue().get(username);
+            if (pwRedis.equals(password)){
+                response.sendRedirect("index.html");
+                System.out.println("**********************用户名密码与 Redis 缓存中一致！*****************************");
+                return null;
+            }else {
+                response.sendRedirect("login.html");
+                System.out.println("**********************密码与 Redis 缓存中不一致，请重新输入！*****************************");
+                return null;
+            }
         }
-        return null;
+
+            Map<String,String> newUser = adminService.login(user);
+            if(newUser == null){
+                response.sendRedirect("login.html");
+                System.out.println("**********************用户名密码错误，请重新输入！*****************************");
+                return null;
+            }
+
+        stringRedisTemplate.opsForValue().set(username,password);
+            System.out.println("**********************用户名密码存入 Redis 缓存中！*****************************");
+
+            String token = "123456";
+            Cookie cookie = new Cookie("token",token);
+            cookie.setMaxAge(24*3600);
+            response.addCookie(cookie);
+            response.sendRedirect("index.html");
+            return null;
     }
 
     @PostMapping("validateLogin.do")
