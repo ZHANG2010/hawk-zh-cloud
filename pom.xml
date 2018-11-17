@@ -124,9 +124,9 @@
                     <!-- 是否覆盖 -->
                     <overwrite>true</overwrite>
                     <!-- 自动生成的配置 -->
-                    <configurationFile>${project.basedir}/src/main/resources/mybatis-generator.xml </configurationFile>
+                    <configurationFile>src/main/resources/mybatis-generator.xml </configurationFile>
                     <!--配置文件的路径-->
-                    <configurationFile>${project.basedir}/src/main/resources/generator/generatorConfig.xml</configurationFile>
+                    <configurationFile>src/main/resources/generator/generatorConfig.xml</configurationFile>
                     <overwrite>true</overwrite>
                 </configuration>
 
