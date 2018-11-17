@@ -6,7 +6,7 @@
 	<groupId>com.hawk.base.zuul</groupId>
 	<artifactId>zuul-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<name>zuul-server</name>
 	<description>网关服务模块</description>

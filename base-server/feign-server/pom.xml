@@ -6,7 +6,7 @@
 	<groupId>com.hawk.base.feign</groupId>
 	<artifactId>feign-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<name>feign-server</name>
 	<description>负载均衡模块</description>

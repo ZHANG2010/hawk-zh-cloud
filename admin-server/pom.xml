@@ -6,7 +6,7 @@
 	<groupId>com.hawk.admin</groupId>
 	<artifactId>admin-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<name>admin-server</name>
 	<description>用户服务模块</description>
